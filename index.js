@@ -1,26 +1,44 @@
 
-const { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes } = require('./iss')
+//const { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes } = require('./iss')
+const { nextISSTimesForMyLocation } = require('./iss');
 
-// fetchMyIP((error, ip) => {
-//   if (error) {
-//     console.log("It didn't work!", error);
-//     return;
-//   }
+const printPassTimes = function (passTimes) {
+  for (const pass of passTimes) {
+    const datetime = new Date(0);
+    datetime.setUTCSeconds(pass.risetime);
+    const duration = pass.duration;
+    console.log(`Next pass at ${datetime} for ${duration} seconds!`);
+  }
+};
 
-//   console.log('It worked! Returned IP:', ip);
-// });
+nextISSTimesForMyLocation((error, passTimes) => {
+  if (error) {
+    return console.log("It didn't work!", error);
+  }
+  // success, print out the deets!
+  printPassTimes(passTimes);
+});
 
-let ourCoordinates = fetchCoordsByIP("45.72.204.148", (error, data) => {
-  console.log("Error = ", error)
-  console.log("Data = ", data)
-})
+nextISSTimesForMyLocation()
 
 
-// WHAT SHOULD CALL BACK BE? WHAT IT DO?
 
 
-// at some poitn we sould feed an ip and our funtio  gives us long and lat
-fetchISSFlyOverTimes(ourCoordinates, (error, data) => {
-  console.log("Error = ", error)
-  console.log("Data = ", data)
-})
+      // let myIp = fetchMyIP((error, ip) => {
+      //   if (error) {
+      //     console.log("It didn't work!", error);
+      //     return;
+      //   }
+
+      //   console.log('It worked! Returned IP:', ip);
+      // });
+
+      // let ourCoordinates = fetchCoordsByIP(myIp, (error, data) => {
+      //   console.log("Error = ", error)
+      //   console.log("Data = ", data)
+      // })
+
+      // fetchISSFlyOverTimes(ourCoordinates, (error, data) => {
+      //   console.log("Error = ", error)
+      //   console.log("Data = ", data)
+      // })
