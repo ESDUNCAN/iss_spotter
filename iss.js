@@ -27,14 +27,6 @@ module.exports = { nextISSTimesForMyLocation };
 
 
 
-
-
-
-
-
-
-
-
 const fetchMyIP = function (callback) {
   const url = 'https://api.ipify.org?format=json'
   request(url, function (error, response, body) {
@@ -53,8 +45,8 @@ const fetchMyIP = function (callback) {
 }
 
 const fetchCoordsByIP = function (ip, callback) {
-  let url = "https://api.ipbase.com/v2/info?apikey=SdlZVFBO9Rw9NpiyaAvRMPVFewooAz656tYcwx0W&ip=1.1.1.1"
-  request(url, function (error, response, body) {
+  let url = "https://api.ipbase.com/v2/info?apikey=SdlZVFBO9Rw9NpiyaAvRMPVFewooAz656tYcwx0W&ip="
+  request(url + ip, function (error, response, body) {
     if (error) {
       callback(error, null);
       return
@@ -90,5 +82,5 @@ const fetchISSFlyOverTimes = function (coords, callback) {
   });
 };
 
-// module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes };
+//module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes };
 

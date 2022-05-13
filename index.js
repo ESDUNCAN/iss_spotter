@@ -19,7 +19,7 @@ nextISSTimesForMyLocation((error, passTimes) => {
   printPassTimes(passTimes);
 });
 
-nextISSTimesForMyLocation()
+
 
 
 
