@@ -1,5 +1,5 @@
 
-const { fetchCoordsByIP, fetchMyIP } = require('./iss')
+const { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes } = require('./iss')
 
 // fetchMyIP((error, ip) => {
 //   if (error) {
@@ -10,8 +10,17 @@ const { fetchCoordsByIP, fetchMyIP } = require('./iss')
 //   console.log('It worked! Returned IP:', ip);
 // });
 
-fetchCoordsByIP("45.72.204.148", (error, data) => {
+let ourCoordinates = fetchCoordsByIP("45.72.204.148", (error, data) => {
   console.log("Error = ", error)
   console.log("Data = ", data)
 })
 
+
+// WHAT SHOULD CALL BACK BE? WHAT IT DO?
+
+
+// at some poitn we sould feed an ip and our funtio  gives us long and lat
+fetchISSFlyOverTimes(ourCoordinates, (error, data) => {
+  console.log("Error = ", error)
+  console.log("Data = ", data)
+})

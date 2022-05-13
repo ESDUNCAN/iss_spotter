@@ -16,7 +16,6 @@ const fetchMyIP = function (callback) {
     callback(null, ip)
   });
 }
-//module.exports = { fetchMyIP };
 
 const fetchCoordsByIP = function (ip, callback) {
   let url = "https://api.ipbase.com/v2/info?apikey=SdlZVFBO9Rw9NpiyaAvRMPVFewooAz656tYcwx0W&ip=1.1.1.1"
@@ -30,11 +29,31 @@ const fetchCoordsByIP = function (ip, callback) {
       callback(Error(msg), null);
       return;
     }
-    const latitude = JSON.parse(body).data.location.latitude;
-    const longitude = JSON.parse(body).data.location.longitude
-    callback(null, { latitude, longitude })
+    if (!error) {
+      const latitude = JSON.parse(body).data.location.latitude;
+      const longitude = JSON.parse(body).data.location.longitude
+      callback(null, { latitude, longitude })
+    }
   });
 }
 
-module.exports = { fetchCoordsByIP, fetchMyIP };
+
+const fetchISSFlyOverTimes = function (coords, callback) {
+  const url = ' https://iss-pass.herokuapp.com/json/?lat=-33.86714172363281&lon=151.2071075439453'
+  request(url, function (error, response, body) {
+    if (error) {
+      callback(error, null);
+      return
+    }
+    if (response.statusCode !== 200) {
+      const msg = `Status Code ${response.statusCode} when fetching IP. Response: ${body}`;
+      callback(Error(msg), null);
+      return;
+    }
+    const data = JSON.parse(body).response;
+    callback(null, data)
+  });
+};
+
+module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes };
 
